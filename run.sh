@@ -1,0 +1,1 @@
+python -m prepocess.build_dicts
