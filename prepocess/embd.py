@@ -8,16 +8,13 @@ def build_entity_dict(emb_dict, lines, desc):
     for line in tqdm(lines, total=len(lines), desc=desc):
         row = line.strip().split()
         try:
-            embedding = [float(w) for w in row[1:entity_embed_size + 1]]
+            embedding = [float(w) for w in row[1: entity_embed_size + 1]]
             emb_dict[row[0]] = np.array(embedding)
         except:
             error_line += 1
     print("Error lines: {}".format(error_line))
 
 # settings
-catgeory_number = 8
-subcate_number = 4
-subcate_news = 4
 word_embed_size = 300
 entity_embed_size = 100
 

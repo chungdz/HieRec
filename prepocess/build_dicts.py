@@ -31,6 +31,8 @@ def parse_his(user_dict, his_beh, desc, user_idx):
             continue
        
         user_dict[uid]["hist"] = hist_list
+    
+    return user_idx
 
 data_path = 'data'
 max_title_len = 30
@@ -146,15 +148,15 @@ user_idx = 0
 
 f_his_beh = os.path.join(data_path, "train/behaviors.tsv")
 his_beh = pd.read_csv(f_his_beh, sep="\t", encoding="utf-8", names=["id", "uid", "time", "hist", "imp"])
-parse_his(user_dict, his_beh, 'parse train behaviors', user_idx)
+user_idx = parse_his(user_dict, his_beh, 'parse train behaviors', user_idx)
 
 f_his_beh = os.path.join(data_path, "dev/behaviors.tsv")
 his_beh = pd.read_csv(f_his_beh, sep="\t", encoding="utf-8", names=["id", "uid", "time", "hist", "imp"])
-parse_his(user_dict, his_beh, 'parse dev behaviors', user_idx)
+user_idx = parse_his(user_dict, his_beh, 'parse dev behaviors', user_idx)
 
 f_his_beh = os.path.join(data_path, "test/behaviors.tsv")
 his_beh = pd.read_csv(f_his_beh, sep="\t", encoding="utf-8", names=["id", "uid", "time", "hist", "imp"])
-parse_his(user_dict, his_beh, 'parse test behaviors', user_idx)
+user_idx = parse_his(user_dict, his_beh, 'parse test behaviors', user_idx)
 
 cate_num_list = []
 subcate_num_list = []
