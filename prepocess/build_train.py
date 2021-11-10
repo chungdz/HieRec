@@ -135,7 +135,7 @@ def main(args):
 
     data_list = []
     for i in range(args.processes):
-        file_name = "train-{}.npy".format(i)
+        file_name = os.path.join(args.root, args.fout, "train-{}.npy".format(i))
         data_list.append(np.load(file_name))
         os.remove(file_name)
     datanp = np.concatenate(data_list, axis=0)
