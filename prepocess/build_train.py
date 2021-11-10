@@ -13,8 +13,6 @@ random.seed(7)
 catgeory_number = 8
 subcate_number = 4
 subcate_news = 4
-lambda_t = 0.15
-lambda_s = 0.7
 
 def find_index(clist, cv):
 
@@ -68,14 +66,14 @@ def build_examples(rank, args, df, news_info, user_info, fout, uemb):
             nstr_subcate = news_info[nstr]['subcate']
             if nstr_cate in cur_category:
                 cef_dict[nstr]['cate_index'] = cur_category[nstr_cate]
-                cef_dict[nstr]['lt'] = lambda_t
+                cef_dict[nstr]['lt'] = 1
             else:
                 cef_dict[nstr]['cate_index'] = 0
                 cef_dict[nstr]['lt'] = 0
             
             if nstr_subcate in cur_subcate:
                 cef_dict[nstr]['subcate_index'] = cur_subcate[nstr_subcate]
-                cef_dict[nstr]['ls'] = lambda_s
+                cef_dict[nstr]['ls'] = 1
             else:
                 cef_dict[nstr]['subcate_index'] = 0
                 cef_dict[nstr]['ls'] = 0
