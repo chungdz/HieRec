@@ -146,6 +146,8 @@ def main(args):
         s = i * sub_len
         e = (i + 1) * sub_len
         np.save("train-{}-new.npy".format(i), datanp[s: e])
+    
+    print(datanp.shape, sub_len)
 
 
 if __name__ == "__main__":
