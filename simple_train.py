@@ -40,7 +40,7 @@ def run(cfg, train_dataset_path, valid_dataset_file, user_emb):
 
     # # Build model.
     model = HieRec(cfg.mc)
-    model.to(0)
+    # model.to(0)
     # Build optimizer.
     steps_one_epoch = len(train_data_loader)
     train_steps = cfg.epoch * steps_one_epoch
@@ -85,7 +85,7 @@ def train(cfg, epoch, rank, model, loader, optimizer, steps_one_epoch, device):
         if i >= steps_one_epoch:
             break
         # data = {key: value.to(device) for key, value in data.items()}
-        data = data.to(device)
+        # data = data.to(0)
         # 1. Forward
         pred = model(data[:, 2:]).squeeze()
         loss = F.cross_entropy(pred, data[:, 1])
@@ -159,7 +159,7 @@ def main(cfg):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--batch_size', type=int, default=128, help='input batch size')
+    parser.add_argument('--batch_size', type=int, default=16, help='input batch size')
     parser.add_argument('--epoch', type=int, default=10, help='the number of epochs to train for')
     parser.add_argument('--lr', type=float, default=0.001, help='learning rate')  # [0.001, 0.0005, 0.0001]
     parser.add_argument('--weight_decay', type=float, default=1e-6)
