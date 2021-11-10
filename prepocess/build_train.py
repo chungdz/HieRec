@@ -102,7 +102,7 @@ def build_examples(rank, args, df, news_info, user_info, fout, uemb):
             for neg in sampled:
                 new_row.append(cef_dict[neg]['lt'])
 
-            new_row.append(user_info['idx'])
+            new_row.append(user_info[uid]['idx'])
             
             data_list.append(new_row)
     
