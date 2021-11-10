@@ -2,15 +2,14 @@ import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from models.modules import EntityEncoder, TitleEncoder, SelfAttend
+from models.modules import NewsEncoder
 
 
 class HieRec(nn.Module):
     def __init__(self, cfg):
         super(HieRec, self).__init__()
 
-        self.title_encoder = TitleEncoder(cfg)
-        self.entity_encoder = EntityEncoder(cfg)
+        self.news_encoder = NewsEncoder(cfg)
         self.cfg = cfg
         self.category_emb = nn.Embedding(cfg.cate_num, cfg.hidden_size)
         self.subcategory_emb = nn.Embedding(cfg.subcate_num, cfg.hidden_size)
@@ -43,15 +42,13 @@ class HieRec(nn.Module):
         target_news_title = self.news_title_indexes[news_id]
         target_news_entity = self.news_entity_indexes[news_id]
 
-        target_news_title = self.title_encoder(target_news_title.reshape(-1, self.cfg.max_title_len)).reshape(-1, news_num, self.cfg.word_dim)
-        target_news_entity = self.entity_encoder(target_news_entity.reshape(-1, self.cfg.max_entity_len)).reshape(-1, news_num, self.cfg.entity_dim)
-        print(target_news_title.size(), target_news_entity.size())
+        target_news = self.news_encoder(target_news_title.reshape(-1, self.cfg.max_title_len), target_news_entity.reshape(-1, self.cfg.max_entity_len)).reshape(-1, news_num, self.cfg.hidden_size)
+        print(target_news.size())
 
         user_news_title = self.news_title_indexes[user_news_id]
         user_news_entity = self.news_entity_indexes[user_news_id]
 
-        user_news_title = self.title_encoder(user_news_title.reshape(-1, self.cfg.max_title_len)).reshape(-1, self.cfg.ucatgeory_number, self.cfg.usubcate_number, self.cfg.word_dim)
-        user_news_entity = self.entity_encoder(user_news_entity.reshape(-1, self.cfg.max_entity_len)).reshape(-1, self.cfg.ucatgeory_number, self.cfg.usubcate_number, self.cfg.entity_dim)
-        print(user_news_title.size(), user_news_entity.size())
+        user_news = self.news_encoder(user_news_title.reshape(-1, self.cfg.max_title_len), user_news_entity.reshape(-1, self.cfg.max_entity_len)).reshape(-1, self.cfg.ucatgeory_number, self.cfg.usubcate_number, self.cfg.usubcate_news, self.cfg.hidden_size)
+        print(user_news.size())
 
         return torch.randn(batch_size, news_num)

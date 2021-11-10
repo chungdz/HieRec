@@ -140,7 +140,14 @@ class NewsEncoder(nn.Module):
         self.title_trans = nn.Linear(cfg.word_dim, cfg.hidden_size)
         self.entity_trans = nn.Linear(cfg.entity_dim, cfg.hidden_size)
 
-    def forward(self, seqs):
-        return
+    def forward(self, title_seq, entity_seq):
+
+        title_seq = self.title_encoder(title_seq)
+        entity_seq = self.entity_encoder(entity_seq)
+
+        title_seq = self.title_trans(title_seq)
+        entity_seq = self.entity_trans(entity_seq)
+
+        return title_seq + entity_seq
         
 
