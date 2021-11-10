@@ -130,3 +130,17 @@ class EntityEncoder(nn.Module):
 
         return self_attend
 
+class NewsEncoder(nn.Module):
+    def __init__(self, cfg):
+        super(NewsEncoder, self).__init__()
+        self.cfg = cfg
+        self.title_encoder = TitleEncoder(cfg)
+        self.entity_encoder = EntityEncoder(cfg)
+
+        self.title_trans = nn.Linear(cfg.word_dim, cfg.hidden_size)
+        self.entity_trans = nn.Linear(cfg.entity_dim, cfg.hidden_size)
+
+    def forward(self, seqs):
+        return
+        
+

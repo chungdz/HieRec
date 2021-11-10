@@ -40,6 +40,7 @@ def run(cfg, train_dataset_path, valid_dataset_file, user_emb):
 
     # # Build model.
     model = HieRec(cfg.mc)
+    model.to(0)
     # Build optimizer.
     steps_one_epoch = len(train_data_loader)
     train_steps = cfg.epoch * steps_one_epoch
@@ -84,7 +85,7 @@ def train(cfg, epoch, rank, model, loader, optimizer, steps_one_epoch, device):
         if i >= steps_one_epoch:
             break
         # data = {key: value.to(device) for key, value in data.items()}
-        
+        data = data.to(device)
         # 1. Forward
         pred = model(data[:, 2:]).squeeze()
         loss = F.cross_entropy(pred, data[:, 1])
