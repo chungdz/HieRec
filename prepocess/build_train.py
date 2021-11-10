@@ -145,7 +145,7 @@ def main(args):
     for i in range(args.file_num):
         s = i * sub_len
         e = (i + 1) * sub_len
-        np.save("train-{}-new.npy".format(i), datanp[s: e])
+        np.save(os.path.join(args.root, args.fout, "train-{}-new.npy".format(i)), datanp[s: e])
     
     print(datanp.shape, sub_len)
 
