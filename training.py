@@ -15,7 +15,7 @@ import math
 from datasets.recodata import RecoData
 from datasets.config import ModelConfig
 from gather import gather as gather_all
-from models.hierec import HieRec
+from models.hieReco import HieRec
 from utils.train_util import set_seed
 from utils.train_util import save_checkpoint_by_epoch
 
