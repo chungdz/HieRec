@@ -19,10 +19,10 @@ class ModelConfig():
         self.subcate_dict = json.load(open(os.path.join(root, "subcategory.json"), 'r', encoding='utf-8'))
         self.subcate_num = len(self.subcate_dict)
 
-        self.catgeory_number = 8
-        self.subcate_number = 4
-        self.subcate_news = 4
-        self.max_title_len = 15
+        self.ucatgeory_number = 8
+        self.usubcate_number = 4
+        self.usubcate_news = 4
+        self.max_title_len = 30
         self.neg_count = 4
         self.word_dim = 300
         self.entity_dim = 100
