@@ -1,7 +1,7 @@
-mkdir data result checkpoint
+mkdir data
 cd data
-mkdir train dev test
-kaggle datasets download takuok/glove840b300dtxt
+mkdir train dev test raw result checkpoint
+(/root/.local/bin/)kaggle datasets download takuok/glove840b300dtxt
 unzip glove840b300dtxt.zip
 rm glove840b300dtxt.zip
 cd train
