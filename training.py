@@ -15,12 +15,9 @@ import math
 from datasets.recodata import RecoData
 from datasets.config import ModelConfig
 from gather import gather as gather_all
-from models.pnrec import HieRec
-from utils.log_util import convert_omegaconf_to_dict
+from models.hierec import HieRec
 from utils.train_util import set_seed
 from utils.train_util import save_checkpoint_by_epoch
-from utils.eval_util import group_labels
-from utils.eval_util import cal_metric
 
 def run(cfg, rank, device, finished, train_dataset_path, valid_dataset_file, user_emb):
     """

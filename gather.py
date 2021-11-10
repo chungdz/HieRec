@@ -7,14 +7,7 @@ import numpy as np
 import pandas as pd
 import math
 import torch
-from utils.log_util import NEPTUNE_API_TOKEN
-from utils.log_util import convert_omegaconf_to_dict
-from utils.train_util import set_seed
-from utils.train_util import save_checkpoint_by_epoch
-from utils.eval_util import group_labels
 from utils.eval_util import cal_metric
-
-
 
 def gather(output_path, filenum, start_file=0, validate=False, save=True):
     preds = []

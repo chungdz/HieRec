@@ -6,7 +6,7 @@ import os
 class ModelConfig():
     def __init__(self, root):
 
-        self.word_emb = np.load('{}/emb.npy'.format(root))
+        self.word_emb = np.load('{}/word_emb.npy'.format(root))
         self.word_num = len(self.word_emb)
         self.news_title_emb = np.load('{}/title_emb.npy'.format(root))
         self.news_entity_emb = np.load('{}/news_entity_emb.npy'.format(root))

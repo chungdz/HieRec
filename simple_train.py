@@ -15,12 +15,10 @@ import math
 from datasets.recodata import RecoData
 from datasets.config import ModelConfig
 from gather import gather as gather_all
-from models.pnrec import HieRec
-from utils.log_util import convert_omegaconf_to_dict
+from models.hierec import HieRec
 from utils.train_util import set_seed
 from utils.train_util import save_checkpoint_by_epoch
-from utils.eval_util import group_labels
-from utils.eval_util import cal_metric
+
 
 def run(cfg, train_dataset_path, valid_dataset_file, user_emb):
     """
@@ -49,14 +47,15 @@ def run(cfg, train_dataset_path, valid_dataset_file, user_emb):
     optimizer = torch.optim.Adam(params=model.parameters(), lr=cfg.lr)
     print("Worker %d is working ... " % 0)
     # Fast check the validation process
-    validate(cfg, -1, model, 0, 0, valid_data_loader, fast_dev=True)
-    gather_all(cfg.result_path, 1, validate=True, save=False)
+    # validate(cfg, -1, model, 0, 0, valid_data_loader, fast_dev=True)
+    # gather_all(cfg.result_path, 1, validate=True, save=False)
     
     # Training and validation
     for epoch in range(cfg.epoch):
         # print(model.match_prediction_layer.state_dict()['2.bias'])
         train(cfg, epoch, 0, model, train_data_loader, optimizer, steps_one_epoch, 0)
         validate(cfg, epoch, model, 0, 0, valid_data_loader)
+        save_checkpoint_by_epoch(model.state_dict(), epoch, cfg.checkpoint_path)
         # add finished count
         gather_all(cfg.result_path, 1, validate=True, save=False)
 
@@ -158,7 +157,6 @@ def main(cfg):
 
 
 if __name__ == '__main__':
-    mp.set_start_method('spawn')
     parser = argparse.ArgumentParser()
     parser.add_argument('--batch_size', type=int, default=128, help='input batch size')
     parser.add_argument('--epoch', type=int, default=10, help='the number of epochs to train for')

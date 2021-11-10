@@ -17,10 +17,13 @@ class HieRec(nn.Module):
         self.news_title_indexes = nn.Parameter(torch.LongTensor(self.news_title_emb), requires_grad=False)
         self.news_entity_indexes = nn.Parameter(torch.LongTensor(self.news_entity_emb), requires_grad=False)
 
+
     def forward(self, data, test_mode=False):
         news_num = self.cfg.neg_count + 1
         if test_mode:
             news_num = 1
+        
+        batch_size = data.size(0)
         
         news_id = data[:, :news_num]
         news_category_index = data[:, news_num: news_num * 2]
@@ -43,4 +46,4 @@ class HieRec(nn.Module):
 
         print(user_news_title.size(), user_news_entity.size())
 
-        return 1
+        return torch.randn(batch_size, news_num)
