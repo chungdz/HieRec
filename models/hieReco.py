@@ -14,8 +14,8 @@ class HieRec(nn.Module):
         self.cfg = cfg
         self.category_emb = nn.Embedding(cfg.cate_num, cfg.hidden_size)
         self.subcategory_emb = nn.Embedding(cfg.subcate_num, cfg.hidden_size)
-        self.news_title_indexes = nn.Parameter(torch.LongTensor(self.news_title_emb), requires_grad=False)
-        self.news_entity_indexes = nn.Parameter(torch.LongTensor(self.news_entity_emb), requires_grad=False)
+        self.news_title_indexes = nn.Parameter(torch.LongTensor(self.cfg.news_title_emb), requires_grad=False)
+        self.news_entity_indexes = nn.Parameter(torch.LongTensor(self.cfg.news_entity_emb), requires_grad=False)
 
 
     def forward(self, data, test_mode=False):
@@ -39,11 +39,15 @@ class HieRec(nn.Module):
         target_news_title = self.news_title_indexes[news_id]
         target_news_entity = self.news_entity_indexes[news_id]
 
+        target_news_title = self.title_encoder(target_news_title.reshape(-1, self.cfg.max_title_len)).reshape(-1, news_num, self.cfg.word_dim)
+        # target_news_entity = self.title_encoder(target_news_entity.reshape(-1, self.cfg.max_entity_len)).reshape(-1, news_num, self.cfg.entity_dim)
         print(target_news_title.size(), target_news_entity.size())
 
         user_news_title = self.news_title_indexes[user_news_id]
         user_news_entity = self.news_entity_indexes[user_news_id]
 
+        user_news_title = self.title_encoder(user_news_title.reshape(-1, self.cfg.max_title_len)).reshape(-1, self.cfg.ucatgeory_number, self.cfg.usubcate_number, self.cfg.word_dim)
+        # user_news_entity = self.entity_encoder(user_news_entity.reshape(-1, self.cfg.max_entity_len)).reshape(-1, self.cfg.ucatgeory_number, self.cfg.usubcate_number, self.cfg.entity_dim)
         print(user_news_title.size(), user_news_entity.size())
 
         return torch.randn(batch_size, news_num)

@@ -102,4 +102,4 @@ for k, v in news_dict.items():
     news_entity_matrix[v['idx']] = np.array(v['entity'])
 
 print('news entity embedding shape', news_entity_matrix.shape)
-np.save(news_entity_emb_path, title_matrix)
+np.save(news_entity_emb_path, news_entity_matrix)

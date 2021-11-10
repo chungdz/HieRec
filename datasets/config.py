@@ -23,11 +23,12 @@ class ModelConfig():
         self.usubcate_number = 4
         self.usubcate_news = 4
         self.max_title_len = 30
+        self.max_entity_len = 5
         self.neg_count = 4
         self.word_dim = 300
         self.entity_dim = 100
         self.hidden_size = 400
-        self.head_num = 6
+        self.head_num = 5
         self.dropout = 0.2
         self.lambda_t = 0.15
         self.lambda_s = 0.7

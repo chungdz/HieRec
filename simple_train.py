@@ -152,7 +152,7 @@ def main(cfg):
     cfg.result_path = '{}/result/'.format(cfg.root)
     cfg.checkpoint_path = '{}/checkpoint/'.format(cfg.root)
 
-    run(cfg, "{}/raw/train-0-new.npy", validate_dataset, user_emb)
+    run(cfg, "{}/raw/train-0-new.npy".format(cfg.root), validate_dataset, user_emb)
         
 
 

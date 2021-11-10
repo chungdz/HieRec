@@ -38,11 +38,11 @@ class TitleEncoder(nn.Module):
         self.word_embedding = nn.Embedding.from_pretrained(torch.FloatTensor(cfg.word_emb), freeze=False)
 
         self.mh_self_attn = nn.MultiheadAttention(
-            cfg.hidden_size, num_heads=cfg.head_num
+            cfg.word_dim, num_heads=cfg.head_num
         )
-        self.word_self_attend = SelfAttend(cfg.hidden_size)
+        self.word_self_attend = SelfAttend(cfg.word_dim)
         self.dropout = nn.Dropout(cfg.dropout)
-        
+        self.word_layer_norm = nn.LayerNorm(cfg.word_dim)
 
     def _extract_hidden_rep(self, seqs):
         """
@@ -63,7 +63,7 @@ class TitleEncoder(nn.Module):
 
         return self.word_layer_norm(output + X)
 
-    def encode_news(self, seqs):
+    def forward(self, seqs):
         """
 
         Args:
@@ -92,6 +92,7 @@ class EntityEncoder(nn.Module):
         )
         self.word_self_attend = SelfAttend(cfg.entity_dim)
         self.dropout = nn.Dropout(cfg.dropout)
+        self.word_layer_norm = nn.LayerNorm(cfg.entity_dim)
 
     def _extract_hidden_rep(self, seqs):
         """
@@ -112,7 +113,7 @@ class EntityEncoder(nn.Module):
 
         return self.word_layer_norm(output + X)
 
-    def encode_news(self, seqs):
+    def forward(self, seqs):
         """
 
         Args:
