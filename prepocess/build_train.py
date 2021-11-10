@@ -65,7 +65,7 @@ def build_examples(rank, args, df, news_info, user_info, fout, uemb):
             
             cef_dict[nstr] = {}
             nstr_cate = news_info[nstr]['category']
-            nstr_subcate = news_info[nstr]['subcategory']
+            nstr_subcate = news_info[nstr]['subcate']
             if nstr_cate in cur_category:
                 cef_dict[nstr]['cate_index'] = cur_category[nstr_cate]
                 cef_dict[nstr]['lt'] = lambda_t
@@ -75,7 +75,7 @@ def build_examples(rank, args, df, news_info, user_info, fout, uemb):
             
             if nstr_subcate in cur_subcate:
                 cef_dict[nstr]['subcate_index'] = cur_subcate[nstr_subcate]
-                cef_dict[nstr]['ls'] = lambda_t
+                cef_dict[nstr]['ls'] = lambda_s
             else:
                 cef_dict[nstr]['subcate_index'] = 0
                 cef_dict[nstr]['ls'] = 0
