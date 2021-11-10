@@ -16,6 +16,13 @@ subcate_news = 4
 lambda_t = 0.15
 lambda_s = 0.7
 
+def find_index(clist, cv):
+
+    for i in range(len(clist)):
+        if clist[i] == cv:
+            return i
+    return -1
+
 def build_examples(rank, args, df, news_info, user_info, fout, uemb):
     data_list = []
     for imp_id, uid, imp in tqdm(df[["id", "uid", "imp"]].values, total=df.shape[0]):
@@ -60,19 +67,20 @@ def build_examples(rank, args, df, news_info, user_info, fout, uemb):
             
             cef_dict[nstr] = {}
 
-            try:
-                cef_dict[nstr]['cate_index'] = cur_category.index(news_info[nstr]['category'])
+            
+            cef_dict[nstr]['cate_index'] = cur_category.index(news_info[nstr]['category'])
+            if cef_dict[nstr]['cate_index'] != -1:
                 cef_dict[nstr]['lt'] = lambda_t
-            except:
+            else:
                 cef_dict[nstr]['cate_index'] = 0
                 cef_dict[nstr]['lt'] = 0
             
             if cef_dict[nstr]['lt'] == lambda_t:
                 tmp_sub_list = cur_sub[cef_dict[nstr]['cate_index']]
-                try:
-                    cef_dict[nstr]['subcate_index'] = tmp_sub_list.index(news_info[nstr]['subcate']) + cef_dict[nstr]['cate_index'] * subcate_number
+                cef_dict[nstr]['subcate_index'] = tmp_sub_list.index(news_info[nstr]['subcate']) + cef_dict[nstr]['cate_index'] * subcate_number
+                if cef_dict[nstr]['subcate_index'] != -1:
                     cef_dict[nstr]['ls'] = lambda_s
-                except:
+                else:
                     cef_dict[nstr]['subcate_index'] = 0
                     cef_dict[nstr]['ls'] = 0
             else:
@@ -101,6 +109,10 @@ def build_examples(rank, args, df, news_info, user_info, fout, uemb):
             new_row.append(cef_dict[p]['lt'])
             for neg in sampled:
                 new_row.append(cef_dict[neg]['lt'])
+            # coefficient s
+            new_row.append(cef_dict[p]['ls'])
+            for neg in sampled:
+                new_row.append(cef_dict[neg]['ls'])
 
             new_row.append(user_info[uid]['idx'])
             
