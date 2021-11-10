@@ -30,11 +30,9 @@ def build_examples(rank, args, df, news_info, user_info, fout, uemb):
             continue
 
         cur_emb = uemb[user_info[uid]['idx']]
-        cur_category = cur_emb[:catgeory_number]
-        cur_sub = []
-        for cindex, ccate in enumerate(cur_category):
-            cur_sub.append(cur_emb[catgeory_number + subcate_number * cindex: catgeory_number + subcate_number * (cindex + 1)])
-
+        cur_category = {cur_emb[cindex]: cindex for cindex in range(catgeory_number)}
+        cur_subcate = {cur_emb[subcindex]: subcindex for subcindex in range(catgeory_number, catgeory_number + catgeory_number * subcate_number)}
+        
         imp_list = str(imp).split(' ')
         imp_pos_list = []
         imp_neg_list = []
@@ -66,23 +64,18 @@ def build_examples(rank, args, df, news_info, user_info, fout, uemb):
                 continue
             
             cef_dict[nstr] = {}
-
-            
-            cef_dict[nstr]['cate_index'] = cur_category.index(news_info[nstr]['category'])
-            if cef_dict[nstr]['cate_index'] != -1:
+            nstr_cate = news_info[nstr]['category']
+            nstr_subcate = news_info[nstr]['subcategory']
+            if nstr_cate in cur_category:
+                cef_dict[nstr]['cate_index'] = cur_category[nstr_cate]
                 cef_dict[nstr]['lt'] = lambda_t
             else:
                 cef_dict[nstr]['cate_index'] = 0
                 cef_dict[nstr]['lt'] = 0
             
-            if cef_dict[nstr]['lt'] == lambda_t:
-                tmp_sub_list = cur_sub[cef_dict[nstr]['cate_index']]
-                cef_dict[nstr]['subcate_index'] = tmp_sub_list.index(news_info[nstr]['subcate']) + cef_dict[nstr]['cate_index'] * subcate_number
-                if cef_dict[nstr]['subcate_index'] != -1:
-                    cef_dict[nstr]['ls'] = lambda_s
-                else:
-                    cef_dict[nstr]['subcate_index'] = 0
-                    cef_dict[nstr]['ls'] = 0
+            if nstr_subcate in cur_subcate:
+                cef_dict[nstr]['subcate_index'] = cur_subcate[nstr_subcate]
+                cef_dict[nstr]['ls'] = lambda_t
             else:
                 cef_dict[nstr]['subcate_index'] = 0
                 cef_dict[nstr]['ls'] = 0
