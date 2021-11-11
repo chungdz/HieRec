@@ -24,13 +24,13 @@ from utils.eval_util import cal_metric
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
-def run(cfg, rank, dev_dataset_file, device, model, news_title):
+def run(cfg, rank, dev_dataset_file, device, model, user_emb):
     set_seed(7)
 
     model.to(device)
     model.eval()
 
-    dev_dataset = RecoData(cfg.mc, dev_dataset_file, news_title)
+    dev_dataset = RecoData(cfg.mc, dev_dataset_file, user_emb)
     valid_data_loader = DataLoader(dev_dataset, batch_size=cfg.batch_size, shuffle=False)
 
     if ((cfg.gpus < 2) or (cfg.gpus > 1 and rank == 0)):
@@ -111,8 +111,7 @@ def main(cfg):
     print('load config')
     model_cfg = ModelConfig(cfg.root)
     cfg.mc = model_cfg
-    print('load news info')
-    news_title = np.load('{}/news_info.npy'.format(cfg.root))
+    user_emb = np.load('{}/user_emb.npy'.format(cfg.root))
 
     model = HieRec(model_cfg)
 
@@ -135,7 +134,7 @@ def main(cfg):
         for rank in range(cfg.gpus):
             cur_device = torch.device("cuda:{}".format(rank))
 
-            p = mp.Process(target=run, args=(cfg, rank, dataset_list[rank], cur_device, model, news_title))
+            p = mp.Process(target=run, args=(cfg, rank, dataset_list[rank], cur_device, model, user_emb))
             p.start()
             processes.append(p)
 

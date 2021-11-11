@@ -167,7 +167,7 @@ def validate(cfg, epoch, model, device, rank, valid_data_loader, fast_dev=False,
         f.close()
 
 
-def init_processes(cfg, local_rank, vocab, dataset, valid_dataset, news_title, finished, fn, backend='nccl'):
+def init_processes(cfg, local_rank, vocab, dataset, valid_dataset, user_emb, finished, fn, backend='nccl'):
     """ Initialize the distributed environment. """
     addr = "localhost"
     port = cfg.port
@@ -178,7 +178,7 @@ def init_processes(cfg, local_rank, vocab, dataset, valid_dataset, news_title, f
 
     device = torch.device("cuda:{}".format(local_rank))
 
-    fn(cfg, local_rank, device, finished, train_dataset_path=dataset, valid_dataset_file=valid_dataset, news_title=news_title)
+    fn(cfg, local_rank, device, finished, train_dataset_path=dataset, valid_dataset_file=valid_dataset, user_emb=user_emb)
 
 
 def split_dataset(dataset, gpu_count):
