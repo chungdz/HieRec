@@ -96,7 +96,7 @@ def main(args):
         p.join()
     
     data_list = []
-    for i in range(args.processes // 10):
+    for i in range(math.ceil(args.processes / 10)):
         file_name = os.path.join(args.root, args.fout, "dev-{}.npy".format(i))
         data_list.append(np.load(file_name))
         # os.remove(file_name)
