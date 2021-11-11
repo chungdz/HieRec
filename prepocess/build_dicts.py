@@ -48,7 +48,6 @@ news_dict = {}
 word_dict = {'<pad>': 0}
 entity_dict = {'<pad>': 0}
 category_dict = {'<pad>': 0, '<his>': 1}
-subcategory_dict = {'<pad>': 0, '<his>': 1}
 
 word_idx = 1
 news_idx = 2
