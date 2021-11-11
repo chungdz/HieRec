@@ -32,20 +32,20 @@ for uid, uinfo in tqdm(user_dict.items(), total=len(user_dict), desc='parse user
     
     sorted_cate_len = [t[0] for t in sorted(cate_len, key=lambda x: x[1], reverse=True)]
     if len(sorted_cate_len) < catgeory_number:
-        sorted_cate_len += [cate_dict['<pad>']] * (catgeory_number - len(sorted_cate_len))
+        sorted_cate_len += [cate_dict['<his>']] * (catgeory_number - len(sorted_cate_len))
     sorted_cate_len = sorted_cate_len[:catgeory_number]
     # insert category index 
     cur_line += sorted_cate_len
     assert(len(cur_line) == catgeory_number)
     # insert subcategory index
     for cindex in sorted_cate_len:
-        if cindex == cate_dict['<pad>']:
-            cur_line += [subcate_dict['<pad>']] * subcate_number
+        if cindex == cate_dict['<his>']:
+            cur_line += [subcate_dict['<his>']] * subcate_number
             continue
         
         sorted_subcate_len = sorted(ucate_dict[cindex], key=lambda x: len(ucate_dict[cindex][x]), reverse=True)
         if len(sorted_subcate_len) < subcate_number:
-            sorted_subcate_len += [subcate_dict['<pad>']] * (subcate_number - len(sorted_subcate_len))
+            sorted_subcate_len += [subcate_dict['<his>']] * (subcate_number - len(sorted_subcate_len))
         cur_line += sorted_subcate_len[:subcate_number]
     assert(len(cur_line) == catgeory_number + catgeory_number * subcate_number)
     # insert news index
@@ -56,7 +56,7 @@ for uid, uinfo in tqdm(user_dict.items(), total=len(user_dict), desc='parse user
         
         cur_cate = cur_line[cur_cate_index]
         cur_subcate = cur_line[cur_subcate_index]
-        if cur_subcate == subcate_dict['<pad>']:
+        if cur_subcate == subcate_dict['<his>']:
             cur_line += [news_dict['<his>']['idx']] * subcate_news
         else:
             news_list = ucate_dict[cur_cate][cur_subcate]
