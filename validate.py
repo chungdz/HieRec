@@ -156,7 +156,7 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=128, help='input batch size')
     parser.add_argument('--gpus', type=int, default=2, help='gpu_num')
     parser.add_argument('--epoch', type=int, default=0, help='the number of epochs load checkpoint')
-    parser.add_argument("--root", default="data", type=str)
+    parser.add_argument("--root", default="adressa", type=str)
     parser.add_argument("--type", default='dev', type=str)
     parser.add_argument("--start_dev", default=0, type=int)
     opt = parser.parse_args()
