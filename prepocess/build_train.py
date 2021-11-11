@@ -29,7 +29,7 @@ def build_examples(rank, args, df, news_info, user_info, fout, uemb):
 
         cur_emb = uemb[user_info[uid]['idx']]
         cur_category = {cur_emb[cindex]: cindex for cindex in range(catgeory_number)}
-        cur_subcate = {cur_emb[subcindex]: subcindex for subcindex in range(catgeory_number, catgeory_number + catgeory_number * subcate_number)}
+        cur_subcate = {cur_emb[subcindex]: subcindex - catgeory_number for subcindex in range(catgeory_number, catgeory_number + catgeory_number * subcate_number)}
         
         imp_list = str(imp).split(' ')
         imp_pos_list = []
