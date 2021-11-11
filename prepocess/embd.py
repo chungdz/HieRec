@@ -55,7 +55,7 @@ news_dict = json.load(open(os.path.join(data_path, "news.json"), 'r', encoding='
 title_emb_path = os.path.join(data_path, "title_emb.npy")
 
 title_len = len(news_dict['<pad>']['title'])
-title_matrix = np.zeros((len(news_dict), title_len))
+title_matrix = np.zeros((len(news_dict), title_len), dtype=int)
 
 for k, v in news_dict.items():
     title_matrix[v['idx']] = np.array(v['title'])
@@ -67,7 +67,7 @@ print('build news entity embeddings')
 news_entity_emb_path = os.path.join(data_path, "news_entity_emb.npy")
 
 entity_len = len(news_dict['<pad>']['entity'])
-news_entity_matrix = np.zeros((len(news_dict), entity_len))
+news_entity_matrix = np.zeros((len(news_dict), entity_len), dtype=int)
 
 for k, v in news_dict.items():
     news_entity_matrix[v['idx']] = np.array(v['entity'])

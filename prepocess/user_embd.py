@@ -15,14 +15,14 @@ catgeory_number = 8
 cate_news = 16
 user_embedding_length = catgeory_number + catgeory_number * cate_news
 
-user_embed = np.zeros((len(user_dict), user_embedding_length))
+user_embed = np.zeros((len(user_dict), user_embedding_length), dtype=int)
 for uid, uinfo in tqdm(user_dict.items(), total=len(user_dict), desc='parse user embd'):
     
     ucate_dict = uinfo['cate_dict']
 
     cur_line = []
     
-    sorted_cate_len = [t[0] for t in sorted(ucate_dict, key=lambda x: len(ucate_dict[x]), reverse=True)]
+    sorted_cate_len = sorted(ucate_dict, key=lambda x: len(ucate_dict[x]), reverse=True)
     if len(sorted_cate_len) < catgeory_number:
         sorted_cate_len += [cate_dict['<pad>']] * (catgeory_number - len(sorted_cate_len))
     sorted_cate_len = sorted_cate_len[:catgeory_number]
