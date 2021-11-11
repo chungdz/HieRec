@@ -11,13 +11,11 @@ class ModelConfig():
         self.news_title_emb = np.load('{}/title_emb.npy'.format(root))
         self.news_entity_emb = np.load('{}/news_entity_emb.npy'.format(root))
         self.news_num = len(self.news_title_emb)
-        self.entity_emb = np.load('{}/entity_emb.npy'.format(root))
-        self.entity_num = len(self.entity_emb)
 
         self.category_dict = json.load(open(os.path.join(root, "category.json"), 'r', encoding='utf-8'))
         self.cate_num = len(self.category_dict)
-        self.subcate_dict = json.load(open(os.path.join(root, "subcategory.json"), 'r', encoding='utf-8'))
-        self.subcate_num = len(self.subcate_dict)
+        self.entity_dict = json.load(open(os.path.join(root, "entity.json"), 'r', encoding='utf-8'))
+        self.entity_num = len(self.entity_dict)
 
         self.ucatgeory_number = 8
         self.usubcate_number = 4
@@ -31,6 +29,5 @@ class ModelConfig():
         self.head_num = 5
         self.dropout = 0.2
         self.lambda_t = 0.15
-        self.lambda_s = 0.7
         
         return None
