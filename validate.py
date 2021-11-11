@@ -48,9 +48,13 @@ def run(cfg, rank, dev_dataset_file, device, model, user_emb):
 
             imp_ids += data[:, 0].cpu().numpy().tolist()
             data = data.to(device)
+            batch_size = data.size(0)
+            start_point = torch.arange(batch_size)
+            start_point = start_point.unsqueeze(-1)
+            start_point = start_point.to(device)
 
             # 1. Forward
-            pred = model(data[:, 2:], device, test_mode=True)
+            pred = model(data[:, 2:], start_point, test_mode=True)
             if pred.dim() > 1:
                 pred = pred.squeeze()
             try:

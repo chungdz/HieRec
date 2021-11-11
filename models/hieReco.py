@@ -20,15 +20,10 @@ class HieRec(nn.Module):
         self.cate_attend = SelfAttend(cfg.hidden_size)
         self.user_attend = SelfAttend(cfg.hidden_size)
 
-    def forward(self, data, device, test_mode=False):
+    def forward(self, data, start_point, test_mode=False):
         news_num = self.cfg.neg_count + 1
         if test_mode:
             news_num = 1
-        
-        batch_size = data.size(0)
-        start_point = torch.arange(batch_size)
-        start_point = start_point.unsqueeze(-1)
-        start_point = start_point.to(device)
         
         news_id = data[:, :news_num]
         news_category_index = data[:, news_num: news_num * 2]

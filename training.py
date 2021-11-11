@@ -106,8 +106,13 @@ def train(cfg, epoch, rank, model, loader, optimizer, steps_one_epoch, device):
             break
         # data = {key: value.to(device) for key, value in data.items()}
         data = data.to(device)
+
+        batch_size = data.size(0)
+        start_point = torch.arange(batch_size)
+        start_point = start_point.unsqueeze(-1)
+        start_point = start_point.to(device)
         # 1. Forward
-        pred = model(data[:, 2:], device).squeeze()
+        pred = model(data[:, 2:], start_point).squeeze()
         loss = F.cross_entropy(pred, data[:, 1])
 
         # 3.Backward.
@@ -146,9 +151,13 @@ def validate(cfg, epoch, model, device, rank, valid_data_loader, fast_dev=False,
 
             imp_ids += data[:, 0].cpu().numpy().tolist()
             data = data.to(device)
+            batch_size = data.size(0)
+            start_point = torch.arange(batch_size)
+            start_point = start_point.unsqueeze(-1)
+            start_point = start_point.to(device)
 
             # 1. Forward
-            pred = model(data[:, 2:], device, test_mode=True)
+            pred = model(data[:, 2:], start_point, test_mode=True)
             if pred.dim() > 1:
                 pred = pred.squeeze()
             try:
