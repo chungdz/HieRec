@@ -17,7 +17,7 @@ subcate_number = 4
 subcate_news = 4
 user_embedding_length = catgeory_number + catgeory_number * subcate_number + catgeory_number * subcate_number * subcate_news
 
-user_embed = np.zeros((len(user_dict), user_embedding_length))
+user_embed = np.zeros((len(user_dict), user_embedding_length), dtype=int)
 for uid, uinfo in tqdm(user_dict.items(), total=len(user_dict), desc='parse user embd'):
     
     ucate_dict = uinfo['cate_dict']
