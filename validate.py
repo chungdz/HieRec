@@ -16,7 +16,6 @@ from datasets.recodata import RecoData
 from datasets.config import ModelConfig
 from gather import gather as gather_all
 from models.hieReco import HieRec
-from utils.log_util import convert_omegaconf_to_dict
 from utils.train_util import set_seed
 from utils.train_util import save_checkpoint_by_epoch
 from utils.eval_util import group_labels
