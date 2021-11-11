@@ -146,7 +146,7 @@ def main(cfg):
         
         gather(cfg, point_num)
     
-    gather_all(cfg.result_path, file_num, start_file=cfg.start_dev, validate=False, save=True)
+    gather_all(cfg.result_path, file_num, start_file=cfg.start_dev, validate=True, save=True)
         
 
 if __name__ == '__main__':
@@ -157,7 +157,7 @@ if __name__ == '__main__':
     parser.add_argument('--gpus', type=int, default=2, help='gpu_num')
     parser.add_argument('--epoch', type=int, default=0, help='the number of epochs load checkpoint')
     parser.add_argument("--root", default="data", type=str)
-    parser.add_argument("--type", default='test', type=str)
+    parser.add_argument("--type", default='dev', type=str)
     parser.add_argument("--start_dev", default=0, type=int)
     opt = parser.parse_args()
     logging.warning(opt)
