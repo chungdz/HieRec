@@ -11,8 +11,7 @@ from tqdm import tqdm
 
 random.seed(7)
 catgeory_number = 8
-subcate_number = 4
-subcate_news = 4
+cate_news = 16
 
 def find_index(clist, cv):
 
@@ -29,8 +28,7 @@ def build_examples(rank, args, df, news_info, user_info, fout, uemb):
 
         cur_emb = uemb[user_info[uid]['idx']]
         cur_category = {cur_emb[cindex]: cindex for cindex in range(catgeory_number)}
-        cur_subcate = {cur_emb[subcindex]: subcindex - catgeory_number for subcindex in range(catgeory_number, catgeory_number + catgeory_number * subcate_number)}
-        
+         
         imp_list = str(imp).split(' ')
         imp_all_list = []
         for impre in imp_list:
@@ -43,8 +41,6 @@ def build_examples(rank, args, df, news_info, user_info, fout, uemb):
         cef_dict['<pad>'] = {
             'cate_index': 0,
             'lt': 0,
-            'subcate_index': 0,
-            'ls': 0
         }
         for nstr, nstr_label in imp_all_list:
             if nstr in cef_dict:
@@ -52,22 +48,13 @@ def build_examples(rank, args, df, news_info, user_info, fout, uemb):
             
             cef_dict[nstr] = {}
             nstr_cate = news_info[nstr]['category']
-            nstr_subcate = news_info[nstr]['subcate']
             if nstr_cate in cur_category:
                 cef_dict[nstr]['cate_index'] = cur_category[nstr_cate]
                 cef_dict[nstr]['lt'] = 1
             else:
                 cef_dict[nstr]['cate_index'] = 0
                 cef_dict[nstr]['lt'] = 0
-            
-            if nstr_subcate in cur_subcate:
-                cef_dict[nstr]['subcate_index'] = cur_subcate[nstr_subcate]
-                cef_dict[nstr]['ls'] = 1
-            else:
-                cef_dict[nstr]['subcate_index'] = 0
-                cef_dict[nstr]['ls'] = 0
 
-        
         for p, plabel in imp_all_list:
             new_row = []
             new_row.append(int(imp_id))
@@ -76,12 +63,8 @@ def build_examples(rank, args, df, news_info, user_info, fout, uemb):
             new_row.append(news_info[p]['idx'])
             # cate
             new_row.append(cef_dict[p]['cate_index'])
-            # subcate
-            new_row.append(cef_dict[p]['subcate_index'])
             # coefficient t
             new_row.append(cef_dict[p]['lt'])
-            # coefficient s
-            new_row.append(cef_dict[p]['ls'])
 
             new_row.append(user_info[uid]['idx'])
             data_list.append(new_row)
