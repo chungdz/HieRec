@@ -171,7 +171,7 @@ if __name__ == '__main__':
     parser.add_argument('--lr', type=float, default=0.001, help='learning rate')  # [0.001, 0.0005, 0.0001]
     parser.add_argument('--weight_decay', type=float, default=1e-6)
     parser.add_argument('--port', type=int, default=9337)
-    parser.add_argument("--root", default="data", type=str)
+    parser.add_argument("--root", default="adressa", type=str)
     opt = parser.parse_args()
     logging.warning(opt)
 
