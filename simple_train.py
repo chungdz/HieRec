@@ -48,8 +48,8 @@ def run(cfg, train_dataset_path, valid_dataset_file, user_emb):
     optimizer = torch.optim.Adam(params=model.parameters(), lr=cfg.lr)
     print("Worker %d is working ... " % 0)
     # Fast check the validation process
-    # validate(cfg, -1, model, 0, 0, valid_data_loader, fast_dev=True)
-    # gather_all(cfg.result_path, 1, validate=True, save=False)
+    validate(cfg, -1, model, 0, 0, valid_data_loader, fast_dev=True)
+    gather_all(cfg.result_path, 1, validate=True, save=False)
     
     # Training and validation
     for epoch in range(cfg.epoch):
