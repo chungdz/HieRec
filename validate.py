@@ -50,7 +50,7 @@ def run(cfg, rank, dev_dataset_file, device, model, user_emb):
             data = data.to(device)
 
             # 1. Forward
-            pred = model(data[:, 2:], test_mode=True)
+            pred = model(data[:, 2:], device, test_mode=True)
             if pred.dim() > 1:
                 pred = pred.squeeze()
             try:

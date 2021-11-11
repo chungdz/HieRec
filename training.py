@@ -107,7 +107,7 @@ def train(cfg, epoch, rank, model, loader, optimizer, steps_one_epoch, device):
         # data = {key: value.to(device) for key, value in data.items()}
         data = data.to(device)
         # 1. Forward
-        pred = model(data[:, 2:]).squeeze()
+        pred = model(data[:, 2:], device).squeeze()
         loss = F.cross_entropy(pred, data[:, 1])
 
         # 3.Backward.
@@ -148,7 +148,7 @@ def validate(cfg, epoch, model, device, rank, valid_data_loader, fast_dev=False,
             data = data.to(device)
 
             # 1. Forward
-            pred = model(data[:, 2:], test_mode=True)
+            pred = model(data[:, 2:], device, test_mode=True)
             if pred.dim() > 1:
                 pred = pred.squeeze()
             try:
