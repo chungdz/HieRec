@@ -144,7 +144,7 @@ if __name__ == "__main__":
     parser.add_argument("--neg_count", default=4, type=int)
     parser.add_argument("--processes", default=10, type=int, help="Processes number")
     parser.add_argument("--file_num", default=4, type=int, help="final train file number")
-    parser.add_argument("--root", default="data", type=str)
+    parser.add_argument("--root", default="adressa", type=str)
     args = parser.parse_args()
 
     main(args)

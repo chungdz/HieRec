@@ -99,7 +99,7 @@ def main(args):
     for i in range(args.processes // 10):
         file_name = os.path.join(args.root, args.fout, "dev-{}.npy".format(i))
         data_list.append(np.load(file_name))
-        os.remove(file_name)
+        # os.remove(file_name)
     datanp = np.concatenate(data_list, axis=0)
     np.save(os.path.join(args.root, args.fout, "dev-all.npy".format(i)), datanp)
     print(datanp.shape)
@@ -113,7 +113,7 @@ if __name__ == "__main__":
     parser.add_argument("--fout", default="raw", type=str,
                         help="Path of the output dir.")
     parser.add_argument("--processes", default=10, type=int, help="Processes number")
-    parser.add_argument("--root", default="data", type=str)
+    parser.add_argument("--root", default="adressa", type=str)
     args = parser.parse_args()
 
     main(args)
