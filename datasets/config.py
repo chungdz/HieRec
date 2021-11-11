@@ -18,8 +18,7 @@ class ModelConfig():
         self.entity_num = len(self.entity_dict)
 
         self.ucatgeory_number = 8
-        self.usubcate_number = 4
-        self.usubcate_news = 4
+        self.ucate_news = 16
         self.max_title_len = 30
         self.max_entity_len = 5
         self.neg_count = 4

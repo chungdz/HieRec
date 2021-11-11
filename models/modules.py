@@ -85,7 +85,7 @@ class EntityEncoder(nn.Module):
     def __init__(self, cfg):
         super(EntityEncoder, self).__init__()
         self.cfg = cfg
-        self.word_embedding = nn.Embedding.from_pretrained(torch.FloatTensor(cfg.entity_emb), freeze=False)
+        self.word_embedding = nn.Embedding(cfg.entity_num, cfg.entity_dim)
 
         self.mh_self_attn = nn.MultiheadAttention(
             cfg.entity_dim, num_heads=cfg.head_num
