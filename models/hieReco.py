@@ -52,7 +52,7 @@ class HieRec(nn.Module):
         user_subcate = self.subcate_attend(user_news) + user_subcategories
         news_subcate_target_repre = user_subcate.reshape(-1, self.cfg.hidden_size)[news_subcategory_index]
         
-        user_cate = self.subcate_attend(user_subcate) + user_categories
+        user_cate = self.cate_attend(user_subcate) + user_categories
         news_cate_target_repre = user_cate.reshape(-1, self.cfg.hidden_size)[news_category_index]
 
         user = self.user_attend(user_cate)
